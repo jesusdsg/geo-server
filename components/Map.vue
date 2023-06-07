@@ -39,6 +39,12 @@ import {
   showUrbanizaciones,
   hideUrbanizaciones,
 } from "@/composables/layers/urbanizaciones.composable";
+import {
+  getMatrices,
+  addMatricesLayerByMatriculas,
+  showMatricesLayer,
+  hideMatricesLayer,
+} from "@/composables/layers/matrices.composable";
 //import { formatBarriosForStore } from "@/composables/layers/barrios.composable";
 import { barriosStore } from "@/stores/barrios";
 import { getSelectedLayerByName } from "@/composables/layers/layers.composable";
@@ -106,36 +112,8 @@ const formatMetadatas = (municipioMetadatas) => {
       meta.property = "AREA KM2";
       format.push(meta);
     }
-    /* meta.property == MunicipiosMetadatasTypes.DEPARTAMENTO
-      ? format.push(meta)
-      : null;
-    meta.property == MunicipiosMetadatasTypes.MUNICIPIO
-      ? format.push(meta)
-      : null;
-    meta.property == MunicipiosMetadatasTypes.ENTIDAD
-      ? format.push(meta)
-      : null;
-    meta.property == MunicipiosMetadatasTypes.AREA_KM2
-      ? format.push(meta)
-      : null; */
   });
   return format;
-};
-
-const getEjesViales = async () => {
-  console.log("Heeeere");
-  const { data, error, execute, pending, refresh } = await useFetch(
-    `${config.baseURL}/municipios/f0eaa355-732f-41e3-bd3d-92eff4e29479/ejes-viales/`,
-    {
-      onRequest({ request, options }) {},
-      onRequestError({ request, options, error }) {},
-      async onResponse({ request, response, options }) {
-        ejes.setEjesViales(response._data);
-        console.log("Reeee", response._data);
-      },
-      onResponseError({ request, response, options }) {},
-    }
-  );
 };
 
 const toggleLayers = () => {
@@ -151,7 +129,7 @@ onBeforeMount(async () => {
   getBarrios(config.baseURL);
   getVias(config.baseURL);
   getUrbanizaciones(config.baseURL);
-  //getEjesViales();
+  elements.hideSpinner();
 });
 
 /* Callback to load after map loads */
@@ -175,6 +153,8 @@ useMapbox("map", (map) => {
     });
 
     addEjesVialesByTipo(map);
+    getMatrices();
+    addMatricesLayerByMatriculas(map);
 
     /* Change when ejes are loaded */
     ejes.$subscribe(() => {
@@ -234,7 +214,6 @@ useMapbox("map", (map) => {
       selectedEjesViales
         ? toggleEjesVialesByType(map, ejes.tipos)
         : hideEjesVialesLayer(map, ejes.tipos);
-
       const selectedUrbanizaciones = getSelectedLayerByName(
         "Urbanizaciones",
         state.selected
@@ -242,6 +221,12 @@ useMapbox("map", (map) => {
       selectedUrbanizaciones
         ? showUrbanizaciones(map, urbanizaciones.data)
         : hideUrbanizaciones(map, urbanizaciones.data);
+      const selectedMatrices = getSelectedLayerByName(
+        "Matrices",
+        state.selected
+      );
+      selectedMatrices ? showMatricesLayer(map) : hideMatricesLayer(map);
+      console.log("Selected Matrices", selectedMatrices);
     });
 
     addMainControls(map);

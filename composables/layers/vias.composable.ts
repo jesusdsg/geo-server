@@ -143,10 +143,6 @@ const getViasLegalizadasMetadatas = (metadatas: any) => {
     meta.value != null
       ? (body += `<span><strong>DIRECCIÓN:</strong></span> <span>${meta.value}</span><br />`)
       : null;
-    meta.property == ViasLegalizadasMetadatasTypes.RESPONSABLE &&
-    meta.value != null
-      ? (body += `<span><strong>RESPONSABLE:</strong></span> <span>${meta.value}</span><br />`)
-      : null;
   });
   return body;
 };
