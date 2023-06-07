@@ -1,0 +1,29 @@
+.mapboxgl-popup-content {
+  background-color: #ffffffe0 !important;
+  border-radius: 20px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.mapboxgl-popup-close-button {
+  right: 0.5rem !important;
+}
+
+ /* width */
+ ::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(75 85 99 / 1);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+} 

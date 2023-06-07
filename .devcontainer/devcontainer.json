@@ -1,0 +1,13 @@
+{
+  "name": "geo-server",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:0-18",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "hollowtree.vue-snippets",
+        "Vue.volar",
+        "Vue.vscode-typescript-vue-plugin"
+      ]
+    }
+  }
+}
